@@ -6,7 +6,7 @@
       "value": "${AZURE_ENV_NAME}"
     },
     "resourceGroupName": {
-      "value": "${AZURE_RESOURCE_GROUP=rg-yla-demo}"
+      "value": "${AZURE_RESOURCE_GROUP=rg-yolasors-demo}"
     },
     "location": {
       "value": "${AZURE_LOCATION}"
