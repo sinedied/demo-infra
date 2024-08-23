@@ -6,8 +6,33 @@
       "capacity": 15
     },
     {
+      "name": "gpt-4-turbo",
+      "version": "turbo-2024-04-09",
+      "capacity": 33
+    },
+    {
+      "name": "gpt-4o",
+      "version": "2024-05-13",
+      "capacity": 10
+    },
+    {
+      "name": "gpt-4o-mini",
+      "version": "2024-07-18",
+      "capacity": 33
+    },
+    {
       "name": "text-embedding-ada-002",
       "version": "2",
+      "capacity": 30
+    },
+    {
+      "name": "text-embedding-large",
+      "version": "1",
+      "capacity": 30
+    },
+    {
+      "name": "text-embedding-small",
+      "version": "1",
       "capacity": 30
     },
     {
