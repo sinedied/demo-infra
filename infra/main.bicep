@@ -20,7 +20,6 @@ param resourceGroupName string = ''
 })
 param openAiLocation string // Set in main.parameters.json
 param openAiSkuName string = 'S0'
-param openAiUrl string = ''
 param openAiApiVersion string // Set in main.parameters.json
 
 // Id of the user or app to assign application roles
@@ -32,7 +31,6 @@ param isContinuousDeployment bool // Set in main.parameters.json
 var abbrs = loadJsonContent('abbreviations.json')
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
 var tags = { 'azd-env-name': environmentName }
-var finalOpenAiUrl = empty(openAiUrl) ? 'https://${openAi.outputs.name}.openai.azure.com' : openAiUrl
 var config = loadJsonContent('config.json')
 var disableLocalAuth = false
 
@@ -43,7 +41,7 @@ resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
   tags: tags
 }
 
-module openAi 'core/ai/cognitiveservices.bicep' = if (empty(openAiUrl)) {
+module openAi 'core/ai/cognitiveservices.bicep' = {
   name: 'openai'
   scope: resourceGroup
   params: {
@@ -88,6 +86,18 @@ module cosmosDb './core/database/cosmos/sql/cosmos-sql-db.bicep' = {
   }
 }
 
+module cosmosVcore 'core/database/cosmos-mongo-db-vcore.bicep' = {
+  name: 'cosmos-mongo'
+  scope: resourceGroup
+  params: {
+    accountName: '${abbrs.documentDBDatabaseAccounts}vcore${resourceToken}'
+    administratorLogin: 'admin${resourceToken}'
+    skuName: 'Free'
+    location: location
+    tags: tags
+  }
+}
+
 // Managed identity roles assignation
 // ---------------------------------------------------------------------------
 
@@ -129,7 +139,7 @@ output AZURE_LOCATION string = location
 output AZURE_TENANT_ID string = tenant().tenantId
 output AZURE_RESOURCE_GROUP string = resourceGroup.name
 
-output AZURE_OPENAI_API_ENDPOINT string = finalOpenAiUrl
+output AZURE_OPENAI_API_ENDPOINT string = 'https://${openAi.outputs.name}.openai.azure.com'
 output AZURE_OPENAI_API_INSTANCE_NAME string = openAi.outputs.name
 output AZURE_OPENAI_API_VERSION string = openAiApiVersion
 output AZURE_COSMOSDB_NOSQL_ENDPOINT string = cosmosDb.outputs.endpoint
