@@ -114,6 +114,22 @@ module searchService 'core/search/search-services.bicep' = {
   }
 }
 
+module storage './core/storage/storage-account.bicep' = {
+  name: 'storage'
+  scope: resourceGroup
+  params: {
+    name: '${abbrs.storageStorageAccounts}${resourceToken}'
+    location: location
+    tags: tags
+    containers: [
+      {
+        name: 'env'
+        publicAccess: 'None'
+      }
+    ]
+  }
+}
+
 // Managed identity roles assignation
 // ---------------------------------------------------------------------------
 
