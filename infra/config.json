@@ -1,0 +1,24 @@
+{
+  "models": [
+    {
+      "name": "gpt-35-turbo",
+      "version": "1106",
+      "capacity": 15
+    },
+    {
+      "name": "text-embedding-ada-002",
+      "version": "2",
+      "capacity": 30
+    },
+    {
+      "name": "dall-e-3",
+      "version": "3.0",
+      "capacity": 1
+    },
+    {
+      "name": "whisper",
+      "version": "001",
+      "capacity": 1
+    }
+  ]
+}
