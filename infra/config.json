@@ -6,19 +6,22 @@
       "capacity": 15
     },
     {
-      "name": "gpt-4-turbo",
+      "name": "gpt-4",
+      "alias": "gpt-4-turbo",
       "version": "turbo-2024-04-09",
-      "capacity": 33
+      "capacity": 8
     },
     {
       "name": "gpt-4o",
       "version": "2024-05-13",
-      "capacity": 10
+      "sku": "GlobalStandard",
+      "capacity": 20
     },
     {
       "name": "gpt-4o-mini",
       "version": "2024-07-18",
-      "capacity": 33
+      "sku": "GlobalStandard",
+      "capacity": 30
     },
     {
       "name": "text-embedding-ada-002",
@@ -26,14 +29,26 @@
       "capacity": 30
     },
     {
-      "name": "text-embedding-large",
+      "name": "text-embedding-3-large",
       "version": "1",
-      "capacity": 30
+      "capacity": 60
     },
     {
-      "name": "text-embedding-small",
-      "version": "1",
-      "capacity": 30
+      "name": "whisper",
+      "version": "001",
+      "capacity": 1
+    },
+    {
+      "name": "tts-hd",
+      "version": "001",
+      "capacity": 3
+    }
+  ],
+  "unavailableModels": [
+    {
+      "name": "gpt-4",
+      "version": "1106-Preview",
+      "capacity": 8
     },
     {
       "name": "dall-e-3",
@@ -41,9 +56,9 @@
       "capacity": 1
     },
     {
-      "name": "whisper",
-      "version": "001",
-      "capacity": 1
+      "name": "text-embedding-small",
+      "version": "1",
+      "capacity": 30
     }
   ]
 }
