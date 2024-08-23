@@ -25,6 +25,9 @@ param openAiApiVersion string // Set in main.parameters.json
 // Id of the user or app to assign application roles
 param principalId string = ''
 
+// Differentiates between automated and manual deployments
+param isContinuousDeployment bool // Set in main.parameters.json
+
 var abbrs = loadJsonContent('abbreviations.json')
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
 var tags = { 'azd-env-name': environmentName }
@@ -115,7 +118,7 @@ module searchService 'core/search/search-services.bicep' = {
 // ---------------------------------------------------------------------------
 
 // User roles
-module openAiRoleUser 'core/security/role.bicep' = {
+module openAiRoleUser 'core/security/role.bicep' = if (!isContinuousDeployment) {
   scope: resourceGroup
   name: 'openai-role-user'
   params: {
@@ -126,7 +129,7 @@ module openAiRoleUser 'core/security/role.bicep' = {
   }
 }
 
-module speechRoleUser 'core/security/role.bicep' = {
+module speechRoleUser 'core/security/role.bicep' = if (!isContinuousDeployment) {
   scope: resourceGroup
   name: 'speech-role-user'
   params: {
@@ -137,7 +140,7 @@ module speechRoleUser 'core/security/role.bicep' = {
   }
 }
 
-module dbContribRoleUser './core/database/cosmos/sql/cosmos-sql-role-assign.bicep' = {
+module dbContribRoleUser './core/database/cosmos/sql/cosmos-sql-role-assign.bicep' = if (!isContinuousDeployment) {
   scope: resourceGroup
   name: 'db-contrib-role-user'
   params: {
@@ -156,3 +159,5 @@ output AZURE_OPENAI_API_ENDPOINT string = 'https://${openAi.outputs.name}.openai
 output AZURE_OPENAI_API_INSTANCE_NAME string = openAi.outputs.name
 output AZURE_OPENAI_API_VERSION string = openAiApiVersion
 output AZURE_COSMOSDB_NOSQL_ENDPOINT string = cosmosDb.outputs.endpoint
+output AZURE_COSMOSDB_MONGODB_VCORE_ENDPOINT string = cosmosVcore.outputs.connectionString
+output AZURE_AISEARCH_ENDPOINT string = searchService.outputs.endpoint

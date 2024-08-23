@@ -19,6 +19,9 @@
     },
     "openAiApiVersion": {
       "value": "${AZURE_OPENAI_API_VERSION=2024-02-01}"
+    },
+    "isContinuousDeployment": {
+      "value": "${CI=false}"
     }
   }
 }
