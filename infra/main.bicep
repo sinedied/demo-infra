@@ -98,6 +98,22 @@ module cosmosVcore 'core/database/cosmos-mongo-db-vcore.bicep' = {
   }
 }
 
+module searchService 'core/search/search-services.bicep' = {
+  name: 'search-service'
+  scope: resourceGroup
+  params: {
+    name: '${abbrs.searchSearchServices}${resourceToken}'
+    location: location
+    tags: tags
+    disableLocalAuth: disableLocalAuth
+    authOptions: null
+    sku: {
+      name: 'basic'
+    }
+    semanticSearch: 'free'
+  }
+}
+
 // Managed identity roles assignation
 // ---------------------------------------------------------------------------
 
