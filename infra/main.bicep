@@ -25,9 +25,6 @@ param openAiApiVersion string // Set in main.parameters.json
 // Id of the user or app to assign application roles
 param principalId string = ''
 
-// Differentiates between automated and manual deployments
-param isContinuousDeployment bool // Set in main.parameters.json
-
 var abbrs = loadJsonContent('abbreviations.json')
 var resourceToken = toLower(uniqueString(subscription().id, environmentName, location))
 var tags = { 'azd-env-name': environmentName }
@@ -118,7 +115,7 @@ module searchService 'core/search/search-services.bicep' = {
 // ---------------------------------------------------------------------------
 
 // User roles
-module openAiRoleUser 'core/security/role.bicep' = if (!isContinuousDeployment) {
+module openAiRoleUser 'core/security/role.bicep' = {
   scope: resourceGroup
   name: 'openai-role-user'
   params: {
