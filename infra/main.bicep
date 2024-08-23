@@ -34,6 +34,7 @@ var resourceToken = toLower(uniqueString(subscription().id, environmentName, loc
 var tags = { 'azd-env-name': environmentName }
 var finalOpenAiUrl = empty(openAiUrl) ? 'https://${openAi.outputs.name}.openai.azure.com' : openAiUrl
 var config = loadJsonContent('config.json')
+var disableLocalAuth = false
 
 // Organize resources in a resource group
 resource resourceGroup 'Microsoft.Resources/resourceGroups@2021-04-01' = {
@@ -52,7 +53,7 @@ module openAi 'core/ai/cognitiveservices.bicep' = if (empty(openAiUrl)) {
     sku: {
       name: openAiSkuName
     }
-    disableLocalAuth: false
+    disableLocalAuth: disableLocalAuth
     deployments: [for model in config.models: {
       name: model.name
       model: {
@@ -65,6 +66,25 @@ module openAi 'core/ai/cognitiveservices.bicep' = if (empty(openAiUrl)) {
         capacity: model.capacity
       }
     }]
+  }
+}
+
+module cosmosDb './core/database/cosmos/sql/cosmos-sql-db.bicep' = {
+  name: 'cosmosDb'
+  scope: resourceGroup
+  params: {
+    accountName: '${abbrs.documentDBDatabaseAccounts}${resourceToken}'
+    location: location
+    tags: tags
+    containers: [
+      {
+        name: 'vectorSearchContainer'
+        id: 'vectorSearchContainer'
+        partitionKey: '/id'
+      }
+    ]
+    databaseName: 'vectorSearchDB'
+    disableLocalAuth: disableLocalAuth
   }
 }
 
@@ -94,6 +114,17 @@ module speechRoleUser 'core/security/role.bicep' = {
   }
 }
 
+module dbContribRoleUser './core/database/cosmos/sql/cosmos-sql-role-assign.bicep' = {
+  scope: resourceGroup
+  name: 'db-contrib-role-user'
+  params: {
+    accountName: cosmosDb.outputs.accountName
+    principalId: principalId
+    // Cosmos DB Data Contributor
+    roleDefinitionId: cosmosDb.outputs.roleDefinitionId
+  }
+}
+
 output AZURE_LOCATION string = location
 output AZURE_TENANT_ID string = tenant().tenantId
 output AZURE_RESOURCE_GROUP string = resourceGroup.name
@@ -101,3 +132,4 @@ output AZURE_RESOURCE_GROUP string = resourceGroup.name
 output AZURE_OPENAI_API_ENDPOINT string = finalOpenAiUrl
 output AZURE_OPENAI_API_INSTANCE_NAME string = openAi.outputs.name
 output AZURE_OPENAI_API_VERSION string = openAiApiVersion
+output AZURE_COSMOSDB_NOSQL_ENDPOINT string = cosmosDb.outputs.endpoint
