@@ -38,3 +38,4 @@ resource cosmos 'Microsoft.DocumentDB/databaseAccounts@2023-11-15' = {
 output endpoint string = cosmos.properties.documentEndpoint
 output id string = cosmos.id
 output name string = cosmos.name
+output connectionString string = cosmos.listConnectionStrings().connectionStrings[0].connectionString

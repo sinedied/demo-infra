@@ -71,3 +71,4 @@ output accountName string = cosmos.outputs.name
 output databaseName string = databaseName
 output endpoint string = cosmos.outputs.endpoint
 output roleDefinitionId string = roleDefinition.outputs.id
+output connectionString string = cosmos.outputs.connectionString

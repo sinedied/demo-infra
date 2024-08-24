@@ -53,16 +53,17 @@ module openAi 'core/ai/cognitiveservices.bicep' = {
     }
     disableLocalAuth: disableLocalAuth
     deployments: [for model in config.models: {
-      name: model.name
+      name: model.?alias ?? model.name
       model: {
         format: 'OpenAI'
         name: model.name
         version: model.version
       }
       sku: {
-        name: 'Standard'
+        name: model.?sku ?? 'Standard'
         capacity: model.capacity
       }
+      raiPolicyName: 'Microsoft.DefaultV2'
     }]
   }
 }
@@ -172,8 +173,14 @@ output AZURE_TENANT_ID string = tenant().tenantId
 output AZURE_RESOURCE_GROUP string = resourceGroup.name
 
 output AZURE_OPENAI_API_ENDPOINT string = 'https://${openAi.outputs.name}.openai.azure.com'
+output AZURE_OPENAI_API_KEY string = openAi.outputs.key
 output AZURE_OPENAI_API_INSTANCE_NAME string = openAi.outputs.name
 output AZURE_OPENAI_API_VERSION string = openAiApiVersion
+
 output AZURE_COSMOSDB_NOSQL_ENDPOINT string = cosmosDb.outputs.endpoint
-output AZURE_COSMOSDB_MONGODB_VCORE_ENDPOINT string = cosmosVcore.outputs.connectionString
+output AZURE_COSMOSDB_NOSQL_CONNECTION_STRING string = cosmosDb.outputs.connectionString
+
+output AZURE_COSMOSDB_MONGODB_VCORE_CONNECTION_STRING string = cosmosVcore.outputs.connectionString
+
 output AZURE_AISEARCH_ENDPOINT string = searchService.outputs.endpoint
+output AZURE_AISEARCH_ADMIN_KEY string = searchService.outputs.key
