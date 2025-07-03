@@ -93,7 +93,7 @@ module cosmosVcore 'core/database/cosmos-mongo-db-vcore.bicep' = {
   params: {
     accountName: '${abbrs.documentDBDatabaseAccounts}vcore${resourceToken}'
     administratorLogin: 'admin${resourceToken}'
-    skuName: 'Free'
+    skuName: 'Standard'
     location: location
     tags: tags
   }
@@ -104,7 +104,7 @@ module searchService 'core/search/search-services.bicep' = {
   scope: resourceGroup
   params: {
     name: '${abbrs.searchSearchServices}${resourceToken}'
-    location: location
+    location: 'eastus2'
     tags: tags
     disableLocalAuth: disableLocalAuth
     authOptions: null
