@@ -1,0 +1,60 @@
+{
+  "useOpenAi": true,
+  "useVnet": false,
+  "useWebapp": false,
+  "useBlobStorage": true,
+  "useStaticWebApp": false,
+  "useCosmosDb": true,
+  "useContainerAppsFunctions": false,
+  "useContainerAppsDynamicSesssions": false,
+  "models": [
+    {
+      "name": "gpt-4.1",
+      "sku": "GlobalStandard",
+      "version": "2025-04-14",
+      "capacity": 50
+    },
+        {
+      "name": "gpt-4.1-mini",
+      "sku": "GlobalStandard",
+      "version": "2025-04-14",
+      "capacity": 150
+    },
+    {
+      "name": "gpt-4o",
+      "sku": "GlobalStandard",
+      "version": "2024-11-20",
+      "capacity": 50
+    },
+    {
+      "name": "o4-mini",
+      "sku": "GlobalStandard",
+      "version": "2025-04-16",
+      "capacity": 20
+    },
+    {
+      "name": "text-embedding-ada-002",
+      "sku": "GlobalStandard",
+      "version": "2",
+      "capacity": 150
+    },
+    {
+      "name": "text-embedding-3-large",
+      "sku": "GlobalStandard",
+      "version": "1",
+      "capacity": 100
+    },
+    {
+      "name": "tts-hd",
+      "version": "001",
+      "capacity": 3
+    }
+  ],
+  "unused_models": [
+        {
+      "name": "whisper",
+      "version": "001",
+      "capacity": 1
+    }
+  ]
+}
