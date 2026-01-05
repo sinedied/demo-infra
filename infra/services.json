@@ -9,12 +9,54 @@
   "useContainerAppsDynamicSesssions": false,
   "models": [
     {
+      "name": "gpt-image-1-mini",
+      "sku": "GlobalStandard",
+      "version": "2025-10-06",
+      "capacity": 18
+    },
+    {
+      "name": "gpt-image-1",
+      "sku": "GlobalStandard",
+      "version": "2025-04-15",
+      "capacity": 18
+    },
+    {
+      "name": "gpt-image-1.5",
+      "sku": "GlobalStandard",
+      "version": "2025-12-16",
+      "capacity": 18
+    },
+    {
+      "name": "gpt-5.1-codex",
+      "sku": "GlobalStandard",
+      "version": "2025-11-13",
+      "capacity": 150
+    },
+    {
+      "name": "gpt-5-nano",
+      "sku": "GlobalStandard",
+      "version": "2025-08-07",
+      "capacity": 150
+    },
+    {
+      "name": "gpt-5-mini",
+      "sku": "GlobalStandard",
+      "version": "2025-08-07",
+      "capacity": 150
+    },
+    {
+      "name": "gpt-5.2",
+      "sku": "GlobalStandard",
+      "version": "2025-12-11",
+      "capacity": 50
+    },
+    {
       "name": "gpt-4.1",
       "sku": "GlobalStandard",
       "version": "2025-04-14",
       "capacity": 50
     },
-        {
+    {
       "name": "gpt-4.1-mini",
       "sku": "GlobalStandard",
       "version": "2025-04-14",
@@ -43,18 +85,18 @@
       "sku": "GlobalStandard",
       "version": "1",
       "capacity": 100
+    }
+  ],
+  "unused_models": [
+    {
+      "name": "whisper",
+      "version": "001",
+      "capacity": 1
     },
     {
       "name": "tts-hd",
       "version": "001",
       "capacity": 3
-    }
-  ],
-  "unused_models": [
-        {
-      "name": "whisper",
-      "version": "001",
-      "capacity": 1
     }
   ]
 }
